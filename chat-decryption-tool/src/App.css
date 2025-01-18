@@ -4,6 +4,10 @@
   padding: 2rem;
   text-align: center;
 }
+body {
+  background-color: #f5f5dc; /* Change this to your desired background color */
+  font-family: Arial, sans-serif; /* Optional: Set your preferred font */
+}
 
 .logo {
   height: 6em;
