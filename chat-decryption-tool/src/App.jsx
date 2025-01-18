@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import Chat from "./pages/Chat";
 import { auth } from "./firebase/firebaseconfig";   
+import './index.css';
 
 function App() {
   return (
