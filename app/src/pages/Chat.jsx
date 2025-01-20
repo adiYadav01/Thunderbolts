@@ -9,6 +9,9 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
+  // Default profile picture URL
+  const defaultProfileImage = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAMAAzAMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQYBAwQCB//EADEQAQACAQIEBQEIAQUAAAAAAAABAgMEEQUhQVESEzFhcSIjMlKBkaHB0UIUM2Jygv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD6IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuAAAAAAAAAAAAAAAAAAAAABMgG5vy90pw7h3iiM2eOX+NP7ByabQ5tR92vhr+KyRxcIwxEebe1567coSVYiI2iNtmQckcN0kRt5MT8zLxk4XpJj6cdqz3raXcAhdRwi9Y3w38X/GUdbHfHbw3rMT2la3Pq9Jj1NNrxtbpaPWAVobdTgyafJNMkc+k92oAAAAAAAAAAAAAAA2DuDs4ZpY1Gfe0fRTnb37LBEbQ4+FYfK0dfxX5y7QAAAAAAcfEdLGowTEf7ledVd3nqts8uau8TxeVrLdrcwcoAAAAAAAAAAAAAB1iO4dd+wLTgr4cVI7RDY1aefFhpbvWG0AAAAAABC8drHm4526JpCcdt9tjr2jcEbHoEAAAAAAAAAAAAAB1DcE/wAIzebpYrvzxzs7lc4dqf8ATaiJtP0W5W/tYqzFoiYneJBkAAAAAGJVziOXz9VeY9InaEtxTVRgw+Gs/aW5R7IAAAAAAAAAAAAAAAAmAAjlHON0hw/iHkR5WXecXSeyPP3+QWut62r4qzEx3hneFZ0+pzaed8V527TzhIYeMdM2Kd+9Z3BLsbuGOK6WY5zePmrxfi+CI+ml7fkCS3cmt1uPTV23i159KozPxTPkia02xx3j1cFp35zznvIPebLfPkm+Sd5eIIAAAAAAAAAAAAAAAAAA+Jh16bh+fUbW28FO9uU/oDkmfaTbflET+Se0/CtPi+9vkt7uumHHSNqUrHxAKzGHLPPy7T/5Ymlq+tbR8wtWxNYn1iP0BU+fZiVmy6LT5I+rFX5jkj9Twjlvp78/w36/mCKj0HvJiyYbeHLSaz7vAAAAAAAAAAAAAAADZhxXzZIx467zP7M6fBfUZYpSPmeyw6XTY9NSK0jn1t1kHPouHYsO1skePJ36Q7tmQAAAAAAGvNhx5q+HJWLV90JreHXwfXjnx09vWE+xMRPQFTEpxPh/hm2bBHL1tWOnuiwAAAAAAAAAJAeqUte0VpztPKIeExwbS7V8+3rPKoO3RaaumxRWNptP3p7ukgAAAAAAAAAABiUFxXSeRbzccfZ29faU815cdc2O1LxvEgqw2ajDbDntS3rXl8tYAAAAAABIA9YMU5s1Mcetp2WnHSKUitY2iI2hCcFxePUWyT/hHL5lOQDIAAAAAAAAAAAAAInjeDlXPX/rb+EQs2sxedpcuOetZ2+VZ/gAAAAH/9k=";
+
   // Fetch all users except the current logged-in user
   useEffect(() => {
     const fetchUsers = async () => {
@@ -66,6 +69,7 @@ const Chat = () => {
   return (
     <div className="flex h-screen">
       {/* Left Section: User List */}
+      
       <div className="w-1/3 bg-gray-100 border-r border-gray-300 overflow-y-auto">
         <h2 className="text-xl font-bold p-4 border-b border-gray-300">Users</h2>
         <ul>
@@ -73,11 +77,19 @@ const Chat = () => {
             <li
               key={user.id}
               onClick={() => setSelectedUser(user)}
-              className={`p-4 cursor-pointer hover:bg-gray-200 ${
+              className={`flex items-center p-4 cursor-pointer hover:bg-gray-200 ${
                 selectedUser?.userId === user.userId ? "bg-gray-300" : ""
               }`}
             >
-              {user.email}
+              <img
+                src={defaultProfileImage}
+                alt="Profile"
+                className="w-12 h-12 rounded-full mr-4"
+              />
+              <div>
+                <p className="font-semibold">{user.email}</p>
+                <p className="text-sm text-gray-500">Last seen recently</p>
+              </div>
             </li>
           ))}
         </ul>
@@ -87,8 +99,14 @@ const Chat = () => {
       <div className="w-2/3 flex flex-col">
         {/* Chat Header */}
         {selectedUser && (
-          <div className="p-4 bg-gray-100 border-b border-gray-300">
-            <h2 className="text-lg font-semibold">{selectedUser.email}</h2>
+          <div className="p-2 bg-gray-100 border-b border-gray-300 flex items-center">
+            <img
+              src={defaultProfileImage}
+              alt="Profile"
+              className="w-8 h-8 rounded-full mr-4"
+            />
+            <h2 className="text-lg font-semibold flex-1">{selectedUser.email}</h2>
+            <button className="text-blue-500 text-sm">Call</button>
           </div>
         )}
 
@@ -103,13 +121,16 @@ const Chat = () => {
                 }`}
               >
                 <div
-                  className={`px-4 py-2 rounded-lg ${
+                  className={`px-4 py-2 rounded-lg shadow-md ${
                     msg.senderId === auth.currentUser.uid
                       ? "bg-green-200 text-gray-800"
                       : "bg-gray-200 text-gray-800"
                   }`}
                 >
                   {msg.message}
+                  <div className="text-xs text-gray-500 text-right mt-1">
+                    {new Date(msg.createdAt?.seconds * 1000).toLocaleTimeString()}
+                  </div>
                 </div>
               </div>
             ))
@@ -120,7 +141,7 @@ const Chat = () => {
 
         {/* Input Field */}
         {selectedUser && (
-          <div className="flex items-center p-4 bg-gray-100 border-t border-gray-300">
+          <div className="flex items-center p-2 bg-gray-100 border-t border-gray-300">
             <input
               type="text"
               placeholder="Type your message..."

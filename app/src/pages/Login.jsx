@@ -17,9 +17,9 @@ const Login = () => {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Logged in successfully!");
+      console.log("Logged in successfully!");
       // Redirect to home or another page
-      navigate("/chat");
+      navigate("/");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     } finally {
@@ -87,15 +87,14 @@ const Login = () => {
           </button>
         </form>
 
+        <p className="justify-center space-x-2">------------------or----------------</p>
         {/* Social Sign-In Buttons */}
         <div className="flex flex-col space-y-4 mt-4">
-          <button className="w-full flex items-center justify-center space-x-2 bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition">
+          <button className="w-full flex items-center justify-center space-x-2 bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition">
             <span>Sign in with Google</span>
           </button>
 
-          <button className="w-full flex items-center justify-center space-x-2 bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition">
-            <span>Sign in with Facebook</span>
-          </button>
+         
         </div>
 
         {/* Link to Sign-Up */}
